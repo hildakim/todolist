@@ -23,7 +23,7 @@ def todo(request):
     return render(request, 'home.html', {'contents': contents, 'posts': posts, 'today_list':today_list})
 
 
-def new(request, mt20id):
+def new(request):
   if request.method == 'POST': 
     form = TodoForm(request.POST)
     if form.is_valid():
