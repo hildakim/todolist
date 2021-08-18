@@ -9,6 +9,8 @@ from django.utils.dateformat import DateFormat
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from .forms import TodoForm
+
 
 def todo(request):
     contents = Todo.objects.all()
@@ -33,6 +35,10 @@ def new(request):
       new_todo.save()
       return redirect('todo:home')
     return redirect('todo:home')
+  else:
+    form = TodoForm()
+    return render(request, 'new.html', {'form':form})
+
 
 def delete(request, id):
   if request.method == 'GET':
