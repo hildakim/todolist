@@ -9,7 +9,7 @@ class Todo(models.Model):
     isCompleted = models.BooleanField(default=False)
     like = ManyToManyField(get_user_model(), related_name='like', blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    todo_date = models.DateField()
+    todo_date = models.DateField(null = True, blank=True)
 
     def __str__(self):
         return self.title
