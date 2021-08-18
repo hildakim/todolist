@@ -89,4 +89,4 @@ def mail(request):
           from_email =  settings.EMAIL_HOST_USER, # 보내는 이메일 (settings에서 설정해서 작성안해도 됨)
           recipient_list = [request.POST['recipient_list']], # 받는 이메일 리스트
       )
-      return redirect('/todo')
+      return redirect('todo:home')
