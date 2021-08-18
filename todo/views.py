@@ -56,8 +56,8 @@ def edit(request, id):
 
 def post_likes(request):
   if request.is_ajax():
-    todo_id = request.GET['todo_id']
-    post = Todo.objects.get(id=todo_id)
+    blog_id = request.GET.get('blog_id')
+    post = Todo.objects.get(id=blog_id)
 
     user = request.user
     if post.like.filter(id = user.id).exists():
