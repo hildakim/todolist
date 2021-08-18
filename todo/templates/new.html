@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<head>
+    <Style>
+     
+    </Style>
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+    
+    <h1>새로운 일정 추가하기</h1>
+    <form id="write_form" action="{% url 'todo:new' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form | crispy}}
+        <button id="submit_btn" type="submit">확인</button>
+    </form>
+    
+    {% else %}
+    <h4>로그인 후 이용하세요.
+        <br>
+        <a href="{% url 'todo:home' %}">홈으로</a>
+        <br>
+        <a href="{% url '' %}">로그인</a>
+    </h4>
+    <!-- 로그인페이지 만들고 난 후 url 추가 해야 함. -->
+    {% endif %}
+
+</body>
+
+{% endblock %}

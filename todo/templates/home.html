@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<head>
+    <Style>
+     
+    </Style>
+</head>
+
+<h1>To Do List</h1>
+
+<table>
+    <tr>
+        <th>오늘 할 일</th>
+        <th></th>
+        <th></th>
+    </tr>
+    
+    <div class="makenew_todo">
+        <a href="{% url 'todo:new' %}" id="go_new">새로운 계획 추가</a>
+    </div>
+    
+    {% for content in posts %}
+    <tr>
+        <td>{{content.title}}</td>
+        <td><a href="{% url 'todo:edit' content.id %}">계획 수정하기</td>
+        <td><a href="{% url 'todo:delete' content.id %}">계획 삭제하기</td>
+        <!--
+        <td>{{content.author}}</td>
+        <td>{{content.created | date:"Y-m-d"}}</td> -->
+    </tr>
+    
+    <!-- 만약 할 일이 없을 때 뜨는 값 (empty)-->
+    {% empty %} 
+    <h3>계획을 만들어주세요.</h3>
+
+    {% endfor %}
+</table>
+
+{% endblock %}

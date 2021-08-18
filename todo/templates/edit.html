@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<head>
+    <Style>
+        
+    </Style>
+</head>
+
+{% if request.user == todo.author %}
+<h1>계획 수정</h1>
+<form method="POST" id="todo_form" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{edit_todo | crispy}}
+    <button id="submit_btn" type="submit">확인</button>
+</form>
+
+{% else %}
+    <h3>계획을 수정할 수 없습니다.</h3>
+{% endif %}
+
+{% endblock %}
