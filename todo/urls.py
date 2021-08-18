@@ -10,4 +10,5 @@ urlpatterns = [
     path('edit/<int:id>', edit, name="edit"),
     path('delete/<int:id>', delete, name="delete"),
     path('mail/', mail, name="mail"),
+    path('completed/<int:id>', completed, name="complete")
 ]

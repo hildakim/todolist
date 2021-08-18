@@ -60,6 +60,18 @@ def edit(request, id):
         return redirect('todo:home')
 
 
+def completed(request, id):
+  post = get_object_or_404(Todo, pk = id)
+  if request.method == 'GET':
+    if post.isCompleted == True:
+      post.isCompleted = False
+      post.save()
+    else:
+      post.isCompleted = True
+      post.save()
+  return redirect('todo:home')
+
+
 def post_likes(request):
   if request.is_ajax():
     blog_id = request.GET.get('blog_id')
