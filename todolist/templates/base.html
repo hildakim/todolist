@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <style>
+      .nav-item a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul class="service-menu">
+        <li class="nav-item">
+          <a href="{%url 'todo:home' %}">Todo</a>
+        </li>
+        <li class="nav-item">
+          <a href="{%url 'todo:new' %}">new Todo</a>
+        </li>
+        <li>
+          <a href="">Messenger</a>
+        </li>
+      </ul>
+
+      <ul class="user-menu">
+        <li class="nav-item">
+          {%if user.is_authenticated %}
+          <a href="/accounts/logout" >Logout</a>
+          {%else%}
+          <a href=" ">Login</a> <!-- 여기 링크 채워주세요~~ -->
+          {%endif%}
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+  </body>
+</html>
