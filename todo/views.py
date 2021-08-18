@@ -57,7 +57,7 @@ def edit(request, id):
         if todo_form.is_valid():
             todo = todo_form.save(commit=False) 
             todo.save()
-        return redirect('todo:home', todo.id)
+        return redirect('todo:home')
 
 
 def post_likes(request):
