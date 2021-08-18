@@ -6,7 +6,9 @@ import json
 from django.utils import timezone
 from datetime import datetime
 from django.utils.dateformat import DateFormat
-# Create your views here.
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 def todo(request):
     contents = Todo.objects.all()
@@ -69,3 +71,22 @@ def post_likes(request):
     'message' : message,
   }
   return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@login_required
+def mail(request):
+  posts = Todo.objects.filter(author=request.user).order_by('created')
+  posts = posts.filter(isCompleted=False)
+  todo_list = '아직 완료되지 않은 일정이 ' + str(posts.count()) + '개 있습니다\n\n'
+  for post in posts:
+    todo_list += post.title + '\n'
+  if request.method == 'GET':
+      return render(request, 'mail.html', {'todo_list':todo_list})
+  else:
+      send_mail(
+          subject = request.POST['subject'], # 제목
+          message = request.POST['message'], # 내용
+          from_email =  settings.EMAIL_HOST_USER, # 보내는 이메일 (settings에서 설정해서 작성안해도 됨)
+          recipient_list = [request.POST['recipient_list']], # 받는 이메일 리스트
+      )
+      return redirect('/todo')
