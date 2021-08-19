@@ -4,7 +4,6 @@
     .box {
         width: 40%;
         background-color: white;
-        padding: 50px 0px;
         border-radius: 10px;
     }
 
@@ -21,9 +20,17 @@
     textarea:focus {
         outline: none;
     }
+
+    .confirm_btn {
+            margin-left: 2px;
+            color: black;
+            text-decoration: none;
+            padding: 8px;
+            background-color: rgb(160, 210, 252);
+        }
 </style>
 <div class="box">
-    <h3>메일 작성</h3>
+    <h1>메일 작성하기</h1><br>
 
 <form method="post">
     {%csrf_token%}
@@ -31,7 +38,7 @@
         <p>받는 사람: <input type="text" name="recipient_list" value="{{user.email}}"></p>
              <textarea name="message" id="" cols="30" rows="10">{{todo_list}}
               </textarea><br>
-    <button type="submit" class="btn btn-outline-primary">메일 보내기</button>
+    <button type="submit" class="confirm_btn">메일 보내기</button>
 </form><br>
 <div>
     메일을 자동으로 받고 싶다면 이메일을 등록하세요! <br>
