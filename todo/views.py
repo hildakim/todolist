@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import TodoForm
 
+
 @login_required
 def todo(request):
     contents = Todo.objects.all()
@@ -40,6 +41,7 @@ def new(request):
       return redirect('todo:home')
     return redirect('todo:home')
   else:
+    mail_auto(request)
     form = TodoForm()
     return render(request, 'new.html', {'form':form})
 
@@ -101,18 +103,33 @@ def mail(request):
   posts = posts.filter(isCompleted=False)
   todo_list = '아직 완료되지 않은 일정이 ' + str(posts.count()) + '개 있습니다\n\n'
   for post in posts:
-    todo_list += post.title + '\n'
+    todo_list += '-' + post.title + '\n'
   if request.method == 'GET':
       return render(request, 'mail.html', {'todo_list':todo_list})
   else:
       send_mail(
           subject = request.POST['subject'], # 제목
           message = request.POST['message'], # 내용
-          from_email =  settings.EMAIL_HOST_USER, # 보내는 이메일 (settings에서 설정해서 작성안해도 됨)
+          from_email = settings.EMAIL_HOST_USER, # 보내는 이메일 (settings에서 설정해서 작성안해도 됨)
           recipient_list = [request.POST['recipient_list']], # 받는 이메일 리스트
       )
       return redirect('todo:home')
 
+
+def mail_auto(request):
+  posts = Todo.objects.filter(author=request.user).order_by('created')
+  posts = posts.filter(isCompleted=False)
+  todo_list = '아직 완료되지 않은 일정이 ' + str(posts.count()) + '개 있습니다\n\n'
+  for post in posts:
+    todo_list += '-' + post.title + '\n'
+  if (posts.count() != 0):
+    send_mail(
+      subject = DateFormat(datetime.now()).format('Y년 n월 j일'),
+      message = todo_list,
+      from_email = settings.EMAIL_HOST_USER,
+      recipient_list = [request.user.email],
+    )
+  return redirect('todo:home')
 
 def search(request):
     q = request.GET['q']
