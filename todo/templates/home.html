@@ -3,10 +3,71 @@
 {% load crispy_forms_tags %}
 {% load static %}
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nanum+Gothic&display=swap" rel="stylesheet">
     <style>
+        /* table, th, tr, td, form, div, h1, h3{
+            border: 1px solid black;
+        } */
+        td, tr, th {
+            padding: 10px;
+        }
+        tr, th {
+            border-bottom: 2px solid rgb(160, 210, 252);
+        }
+        table {
+            border: 2px solid rgb(160, 210, 252);
+        }
+        th {
+            background-color: rgb(160, 210, 252) ;
+        }
+        h1 {
+            margin-top: 15px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 50px;
+        }
         .heart {
             width: 20px;
             height: 20px;
+        }
+        .makenew_todo{
+            width: fit-content;
+            padding: 5px;
+            margin-bottom: 10px;
+            background-color: rgb(160, 210, 252);
+        }
+        .makenew_todo a {
+            color: black;
+            text-decoration: none;
+        }
+        .td_btn {
+            /* background-color: rgb(160, 210, 252); */
+            color: black;
+            text-decoration: none;
+            padding: 3px;
+        }
+        .like-box button {
+            border: none;
+            background-color: white;
+        }
+        .btn_complete {
+            text-decoration: none;
+        }
+        .td_title {
+            background-color: rgb(204, 232, 255);
+        }
+        .btn_mytodo {
+            margin-left: 20px;
+            color: black;
+            text-decoration: none;
+            padding: 8px;
+            background-color: rgb(160, 210, 252);
+        }
+        .usertodo_btn {
+            border: 2px solid rgb(160, 210, 252);
+            background-color: white;
+            padding: 5px;
         }
     </style>
 </head>
@@ -44,34 +105,53 @@
         <option value="{{user}}" selected>{{user}}</option>
         {% endfor %}
     </select>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <button class="usertodo_btn" type="submit">검색</button>
     {% if user.is_authenticated %}
-    <a href="?q={{request.user}}">내꺼보기</a><br>
+    <a href="?q={{request.user}}" class="btn_mytodo">내 할 일 보기</a><br>
     {% endif %}
-</form><br><br>
+</form>
+
+<br><br>
+
+<div class="makenew_todo">
+    <a href="{% url 'todo:new' %}" id="go_new">&#10003;새로운 계획 추가</a>
+</div>
+
 <table>
     <tr>
-        <th>오늘 할 일</th>
-        <th></th>
-        <th></th>
+        <th colspan="5">오늘 할 일</th>
     </tr>
-    <div class="makenew_todo">
-        <a href="{% url 'todo:new' %}" id="go_new">새로운 계획 추가</a>
-    </div>
-
+    
     {% for content in posts %}
     <tr>
-        <td>{{content.title}}</td>
-        <td><a href="{% url 'todo:edit' content.id %}">계획 수정하기</td>
-        <td><a href="{% url 'todo:delete' content.id %}">계획 삭제하기</td>
+        {%if request.user == content.author %}
+            {%if content.isCompleted %}
+                <td><a href="{%url 'todo:complete' content.id %}" class="btn_complete">&#9989;</a></td>
+            {%else%}
+                <td><a href="{%url 'todo:complete' content.id %}" class="btn_complete">&#10062;</a></td>
+            {%endif%}
+
+        {%else%}
+            {%if content.isCompleted %}
+                <td>&#9989;</td>
+            {%else%}
+                <td>&#10062;</td>
+            {%endif%}
+        {%endif%}
+
+
+        <td class="td_title">{{content.title}}</td>
+
+        
+        {%if request.user == content.author %}
+        <td><a href="{% url 'todo:edit' content.id %}" class="td_btn">수정&#9986;</td>
+        <td><a href="{% url 'todo:delete' content.id %}" class="td_btn">삭제&#10060;</td>
+        {%endif%}
+        
         <!--
         <td>{{content.author}}</td>
         <td>{{content.created | date:"Y-m-d"}}</td> -->
-        {%if content.isCompleted %}
-        <td><a href="{%url 'todo:complete' content.id %}">완료했음</a></td>
-        {%else%}
-        <td><a href="{%url 'todo:complete' content.id %}">완료안했음</a></td>
-        {%endif%}
+        
         <td>
             <div class="like-box">
                 {%if user.is_authenticated %}
