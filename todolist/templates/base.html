@@ -20,10 +20,34 @@
         <li class="nav-item">
           <a href="{%url 'todo:new' %}">new Todo</a>
         </li>
-        <li>
-          <a href="">Messenger</a>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Message
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'messenger:received_m' %}">My Message</a></li>
+            <li><a class="dropdown-item" href="{% url 'messenger:send_m' %}">My Send Message</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'messenger:new_m' %}">Send Message</a></li>
+          </ul>
         </li>
+        {% endif %}
       </ul>
+
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Message
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'messenger:received_m' %}">My Message</a></li>
+              <li><a class="dropdown-item" href="{% url 'messenger:send_m' %}">My Send Message</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'messenger:new_m' %}">Send Message</a></li>
+            </ul>
+          </li>
+          {% endif %}
 
       <ul class="user-menu">
         <li class="nav-item">

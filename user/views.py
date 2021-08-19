@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
-from .forms import CustomUserChangeForm
+from .forms import CustomCsUserChangeForm
 # Create your views here.
 
 def user_profile(request):
