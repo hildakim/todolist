@@ -12,16 +12,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Todo',
+            name='Message',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50)),
-                ('isCompleted', models.BooleanField(default=False)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('todo_date', models.DateField(blank=True, null=True)),
+                ('title', models.CharField(max_length=200)),
+                ('pub_date', models.DateTimeField()),
+                ('body', models.TextField()),
             ],
-            options={
-                'ordering': ['-created'],
-            },
         ),
     ]

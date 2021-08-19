@@ -34,8 +34,8 @@ ALLOWED_HOSTS = []
 SITE_ID = 1
 
 # user model
-# AUTH_USER_MODEL = 'user.CustomUser'
-# ACCOUNT_FORMS = {'signup': 'user.forms.CustomSignupForm'}
+AUTH_USER_MODEL = 'user.CustomUser'
+#ACCOUNT_FORMS = {'signup': 'user.forms.CustomSignupForm'}
 # LOGIN_REDIRECT_URL = "/user/profile"
 
 # Application definition

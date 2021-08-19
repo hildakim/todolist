@@ -45,7 +45,9 @@
         {% endfor %}
     </select>
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    {% if user.is_authenticated %}
     <a href="?q={{request.user}}">내꺼보기</a><br>
+    {% endif %}
 </form><br><br>
 <table>
     <tr>
