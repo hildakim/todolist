@@ -9,22 +9,26 @@ from django.utils.dateformat import DateFormat
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .forms import TodoForm
 
-
+@login_required
 def todo(request):
     contents = Todo.objects.all()
 
     todo_list = Todo.objects.all().order_by('-id')
+    todo_list = todo_list.filter(author=request.user)
     paginator = Paginator(todo_list, 10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
     today = DateFormat(datetime.now()).format('Y-m-d')
     today_list = Todo.objects.filter(todo_date = today)
-    return render(request, 'home.html', {'contents': contents, 'posts': posts, 'today_list':today_list})
 
+    users = User.objects.order_by('-username')
+    return render(request, 'home.html', {'contents': contents, 'posts': posts, 'today_list':today_list, 'users':users})
 
+ 
 def new(request):
   if request.method == 'POST': 
     form = TodoForm(request.POST)
@@ -108,3 +112,15 @@ def mail(request):
           recipient_list = [request.POST['recipient_list']], # 받는 이메일 리스트
       )
       return redirect('todo:home')
+
+
+def search(request):
+    q = request.GET['q']
+    user = User.objects.get(username=q)
+    search_list = Todo.objects.filter(author=user)
+    paginator = Paginator(search_list, 10)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    users = User.objects.order_by('-username')
+    return render(request, 'home.html', {'search_list':search_list, 'posts': posts, 'users':users})
