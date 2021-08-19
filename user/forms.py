@@ -22,7 +22,7 @@ class CustomCsUserChangeForm(UserChangeForm):
     username = forms.CharField(label='아이디', widget=forms.TextInput(attrs={'readonly':'readonly'}))
     email = forms.EmailField(label='이메일', required=False)
     nickname = forms.CharField(label='닉네임')
-    birth = forms.DateField(label='생년월일', widget=DateInput())
+    birth = forms.DateField(label='생년월일', widget=DateInput(), required=False)
 
     class Meta:
         model = CustomUser

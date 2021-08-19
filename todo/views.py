@@ -103,7 +103,7 @@ def mail(request):
   posts = posts.filter(isCompleted=False)
   todo_list = '아직 완료되지 않은 일정이 ' + str(posts.count()) + '개 있습니다\n\n'
   for post in posts:
-    todo_list += '-' + post.title + '\n'
+    todo_list += '- ' + post.title + '\n'
   if request.method == 'GET':
       return render(request, 'mail.html', {'todo_list':todo_list})
   else:
@@ -121,7 +121,7 @@ def mail_auto(request):
   posts = posts.filter(isCompleted=False)
   todo_list = '아직 완료되지 않은 일정이 ' + str(posts.count()) + '개 있습니다\n\n'
   for post in posts:
-    todo_list += '-' + post.title + '\n'
+    todo_list += '- ' + post.title + '\n'
   if (posts.count() != 0):
     send_mail(
       subject = DateFormat(datetime.now()).format('Y년 n월 j일'),
