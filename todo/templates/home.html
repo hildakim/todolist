@@ -46,7 +46,7 @@
     </select>
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     {% if user.is_authenticated %}
-    <a href="?q={{request.user}}">내꺼보기</a><br>
+    <a href="?q={{request.user}}">내 계획 보기</a><br>
     {% endif %}
 </form><br><br>
 <table>
@@ -68,9 +68,9 @@
         <td>{{content.author}}</td>
         <td>{{content.created | date:"Y-m-d"}}</td> -->
         {%if content.isCompleted %}
-        <td><a href="{%url 'todo:complete' content.id %}">완료했음</a></td>
+        <td><a href="{%url 'todo:complete' content.id %}">완료 했음</a></td>
         {%else%}
-        <td><a href="{%url 'todo:complete' content.id %}">완료안했음</a></td>
+        <td><a href="{%url 'todo:complete' content.id %}">완료 안 했음</a></td>
         {%endif%}
         <td>
             <div class="like-box">
