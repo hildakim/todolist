@@ -1,12 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 <head>
-    <Style>
-     
-    </Style>
+    <style>
+        .heart {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
 </head>
+<script type="text/javascript">
+    function post_like(p_id){
+        $.ajax({
+            type: "GET",
+            url: "{% url 'todo:post_likes' %}",
+            data: {
+                'blog_id':p_id
+            },
+            dataType: 'json',
+            success: function(response){
+                $('#like_count'+p_id).html(response.like_count)
+                    if(response.message == "좋아요"){
+                        $('#heart'+p_id).attr("src", "{%static 'heart.svg' %}")
+                    } else if (response.message == "좋아요 취소") {
+                        $('#heart'+p_id).attr("src", "{%static 'empty_heart.svg' %}")
+                    }
+            },
+            // error:function(request,status,error){
+            //     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            // }
+
+        })
+    }
+
+</script>
+
 
 <h1>To Do List</h1>
 <form class="form-inline my-2 my-lg-0" action="{% url 'todo:search' %}" method="get">
@@ -41,6 +70,24 @@
         {%else%}
         <td><a href="{%url 'todo:complete' content.id %}">완료안했음</a></td>
         {%endif%}
+        <td>
+            <div class="like-box">
+                {%if user.is_authenticated %}
+                <button id="{{content.id}}" onclick="post_like(this.id)">
+                    {%if request.user in content.like.all%}
+                    <img class="heart" id="heart{{content.id}}" src="{% static 'heart.svg' %}" alt="full_heart">
+                    {%else%}
+                    <img class="heart" id="heart{{content.id}}" src="{% static 'empty_heart.svg' %}" alt="empty_heart">
+                    {%endif%}
+                </button>
+                {%else%}
+                <button id="{{content.id}}" onclick="alert('로그인이 필요합니다')">
+                    <img class="heart" id="heart" src="{% static 'empty_heart.svg' %}" alt="empty_heart">
+                </button>
+                {%endif%}
+                <span id="like_count{{content.id}}">{{content.like.count}}</span>
+            </div>
+        </td>
     </tr>
     
     <!-- 만약 할 일이 없을 때 뜨는 값 (empty)-->

@@ -12,4 +12,5 @@ urlpatterns = [
     path('mail/', mail, name="mail"),
     path('completed/<int:id>', completed, name="complete"),
     path('search/', search, name="search"),
+    path('like/', post_likes, name="post_likes"),
 ]
