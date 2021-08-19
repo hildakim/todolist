@@ -107,7 +107,9 @@
     </select>
     <button class="usertodo_btn" type="submit">검색</button>
     {% if user.is_authenticated %}
+
     <a href="?q={{request.user}}" class="btn_mytodo">내 할 일 보기</a><br>
+
     {% endif %}
 </form>
 
@@ -151,7 +153,7 @@
         <!--
         <td>{{content.author}}</td>
         <td>{{content.created | date:"Y-m-d"}}</td> -->
-        
+
         <td>
             <div class="like-box">
                 {%if user.is_authenticated %}
