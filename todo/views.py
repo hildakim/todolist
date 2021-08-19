@@ -29,7 +29,7 @@ def todo(request):
     users = CustomUser.objects.order_by('-username')
     return render(request, 'home.html', {'contents': contents, 'posts': posts, 'today_list':today_list, 'users':users})
 
- 
+@login_required
 def new(request):
   if request.method == 'POST': 
     form = TodoForm(request.POST)

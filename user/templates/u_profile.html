@@ -2,9 +2,18 @@
 {% block content %}
 
 <style>
-    table, td {
+    table, td,h3 {
         text-align: center;
         margin: auto;
+    }
+    .confirm_btn {
+            color: black;
+            text-decoration: none;
+            background-color: rgb(160, 210, 252);
+            text-align: center;
+        }
+    body{
+        text-align:center;
     }
 </style>
 
@@ -28,8 +37,11 @@
         <td>{{ user.birth |date:'Y년 m월 d일'}}</td>
     </tr>
 </table>
-<button type="button" onclick="location.href='/user/profile/update'">회원정보 수정</button>
-<button type="button" onclick="location.href='/user/delete'">회원탈퇴</button>
+
+<body>
+<button type="button" onclick="location.href='/user/profile/update'" class="confirm_btn">회원정보 수정</button>
+<button type="button" onclick="location.href='/user/delete'" class="confirm_btn">회원탈퇴</button>
+</body>
 {% else%}
 Please login.<br>
 <a href="{% url 'account_login' %}">Login</a>
