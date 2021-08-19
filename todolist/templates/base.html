@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load socialaccount %}
 <html>
   <head>
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
@@ -31,10 +32,35 @@
           {%else%}
             <a>Login</a>
           {%endif%}
+          
         </li>
       </ul>
     </nav>
 
+    <span class="navbar-text">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      {% if user.is_authenticated %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{user.nickname}}님
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+        </ul>
+      </li>
+      {% endif %}
+      {% if not user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'account_login' %}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'account_signup' %}">SignUp&nbsp;&nbsp;</a>
+      </li>
+      {% endif %}
+      </ul>
+    </span>
 
     <div class="container">
       {% block content %}

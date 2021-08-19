@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="box">
+    <h3>Modify user information</h3>
+    <div class="content">
+        <form method="post" enctype="multipart/form-data">
+            {%csrf_token%} 
+            {% load static %}
+            {% load crispy_forms_tags %}
+            {{user_change_form | crispy}}<br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

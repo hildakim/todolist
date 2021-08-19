@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<h1>{{chat.title}}</h1>
+<div>
+보낸 사람: {{chat.sender}}
+<br>
+날짜: {{chat.pub_date}}
+</div>
+<hr>
+<p>{{chat.body}}</p>
+<a href="{%url 'messenger:new_m'%}">답장하기</a>
+<a href="{% url 'messenger:delete_m' chat.id %}">삭제하기</a>
+{% endblock %}

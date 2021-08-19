@@ -1,0 +1,78 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<h3>{% trans "로그인" %}</h3>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<style>
+.btn-social-login {
+  transition: all .2s;
+  outline: 0;
+  border: 1px solid transparent;
+  padding: .5rem !important;
+  border-radius: 50%;
+  color: #fff;
+}
+.btn-social-login:focus {
+  box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+.text-dark { color: #343a40!important; }
+
+.social {
+  font-size: small;
+}
+
+a { 
+  text-decoration: none; 
+} 
+
+.login {
+  text-align: center;
+  margin: auto;
+  width: 20%;
+}
+
+@media screen and (max-width: 768px) { 
+  .login { 
+    width: 70%; 
+  } 
+}
+
+</style>
+
+{% load static %}
+{% load socialaccount %} 
+{% providers_media_js %} 
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {% load static %}
+  {% load crispy_forms_tags %}
+  {{ form | crispy }} 
+  <button type="submit">{% trans "로그인" %}</button>
+  <br><br>
+  <span class="social">- 소셜 로그인으로 간편하게 로그인하세요! -</span>
+  <br><br>
+  <a href="{% provider_login_url 'google' %}"> 
+    <img src="{% static 'google.png' %}" alt="구글 로그인" height="45"> 
+  </a> 
+  <a href="{% provider_login_url 'naver' %}"> 
+    <img src="{% static 'naver.png' %}" alt="네이버 로그인" height="45"> 
+  </a> 
+  <a href="{% provider_login_url 'kakao' %}"> 
+    <img src="{% static 'kakao.png' %}" alt="카카오 로그인" height="45"> 
+  </a>
+  <br><br>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  
+</form>
+
+{% endblock %}

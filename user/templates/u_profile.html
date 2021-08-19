@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    table, td {
+        text-align: center;
+        margin: auto;
+    }
+</style>
+
+{% if user.is_authenticated %}
+<h3>User Information</h3>
+<table>
+    <tr>
+        <td>ID</td>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <td>E-mail</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+        <td>Nickname</td>
+        <td>{{ user.nickname }}</td>
+    </tr>
+    <tr>
+        <td>Birth</td>
+        <td>{{ user.birth |date:'Y년 m월 d일'}}</td>
+    </tr>
+</table>
+<button type="button" onclick="location.href='/user/profile/update'">회원정보 수정</button>
+<button type="button" onclick="location.href='/user/delete'">회원탈퇴</button>
+{% else%}
+Please login.<br>
+<a href="{% url 'account_login' %}">Login</a>
+{% endif %}
+
+{% endblock %}

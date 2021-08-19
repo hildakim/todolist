@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<h1>보낸 메세지를 확인해보세요!</h1>
+
+{% for chat in chats %}
+<div>
+<h3>{{chat.title}}</h3>
+{{chat.id}}
+{{chat.sender}}
+{{chat.summary}} <a href = "{%url 'messenger:detail_m' chat.id %}">...더 보기</a>
+<br>
+<br>
+</div>
+{% endfor %}
+{% endblock %}
